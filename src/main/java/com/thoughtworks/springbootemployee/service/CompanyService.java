@@ -84,6 +84,11 @@ public class CompanyService {
     }
 
     public void deleteCompanyByIDService(int companyID) {
-
+        Company companyToDelete = companyRepository.getAllCompanies()
+                .stream()
+                .filter(company -> company.getId().equals(companyID))
+                .findFirst()
+                .orElse(null);
+        companyRepository.getAllCompanies().remove(companyToDelete);
     }
 }
