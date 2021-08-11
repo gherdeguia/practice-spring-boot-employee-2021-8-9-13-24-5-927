@@ -104,7 +104,7 @@ public class CompanyServiceTest {
         companies.add(new Company(3, "Xing", employees_list2));
         given(companyRepository.getAllCompanies()).willReturn(companies);
         //when
-        List<Employee> outputCompanyEmployees = companyService.getCompanyEmployeesListByID(1);
+        List<Employee> outputCompanyEmployees = companyService.getEmployeesByCompanyID(3);
 
         //then
 

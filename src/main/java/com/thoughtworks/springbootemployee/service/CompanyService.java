@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CompanyService {
@@ -30,7 +31,13 @@ public class CompanyService {
                 .orElse(null);
     }
 
-    public List<Employee> getCompanyEmployeesListByID(int companyID) {
-        return null;
+    public List<Employee> getEmployeesByCompanyID(int companyID) {
+        return Objects.requireNonNull(companyRepository.getAllCompanies()
+                .stream()
+                .filter(company -> company.getId().equals(companyID))
+                .findFirst()
+                .orElse(null))
+                .getEmployees();
+
     }
 }
