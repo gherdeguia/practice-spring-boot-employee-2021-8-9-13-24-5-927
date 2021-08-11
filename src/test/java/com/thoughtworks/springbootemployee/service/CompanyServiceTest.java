@@ -167,8 +167,8 @@ public class CompanyServiceTest {
 
 
         //then
-        assertEquals(5,companies.size());
-        assertEquals(4, companies.get(3).getId());
+        assertEquals(companyService.getAllCompaniesService().size(),companies.size());
+        assertEquals(companyService.getAllCompaniesService().get(3).getId(), companies.get(3).getId());
 
     }
 
@@ -199,8 +199,14 @@ public class CompanyServiceTest {
 
 
         //then
-        assertEquals(companyService.findCompanyByIDService(2).getName(), companyToBeUpdated.getName());
-        assertEquals(companyService.findCompanyByIDService(2).getEmployees(), companyToBeUpdated.getEmployees());
+        assertEquals(
+                companyService.findCompanyByIDService(2).getName(),
+                companyToBeUpdated.getName()
+        );
+        assertEquals(
+                companyService.findCompanyByIDService(2).getEmployees(),
+                companyToBeUpdated.getEmployees()
+        );
 
     }
 
