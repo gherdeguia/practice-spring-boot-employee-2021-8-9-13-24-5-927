@@ -203,7 +203,7 @@ public class CompanyServiceTest {
 
         //when
         Company companyToBeUpdated = new Company(2, "Xerxes II", employees_list2);
-        companyService.updateCompanyService(companyToBeUpdated);
+        companyService.updateCompanyService(2, companyToBeUpdated);
 
 
         //then

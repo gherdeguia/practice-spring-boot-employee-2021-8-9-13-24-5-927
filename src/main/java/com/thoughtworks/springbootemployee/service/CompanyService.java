@@ -65,7 +65,21 @@ public class CompanyService {
         companyRepository.getAllCompanies().add(newCompany);
     }
 
-    public void updateCompanyService(Company companyToBeUpdated) {
+    public Company updateCompanyService(int companyID, Company companyToBeUpdated) {
+        return companyRepository.getAllCompanies().stream()
+                .filter(company -> company.getId().equals(companyID) )
+                .findFirst()
+                .map(company -> updateCompanyInfo(company,companyToBeUpdated))
+                .get();
+    }
 
+    private Company updateCompanyInfo(Company company, Company companyToBeUpdated) {
+        if (!Objects.isNull(companyToBeUpdated.getName())) {
+            company.setName(companyToBeUpdated.getName());
+        }
+        if (!Objects.isNull(companyToBeUpdated.getEmployees())) {
+            company.setEmployees(companyToBeUpdated.getEmployees());
+        }
+        return company;
     }
 }
