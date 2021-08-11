@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -28,7 +29,12 @@ public class EmployeeService {
                 .orElse(null);
     }
 
-    public Employee getEmployeesByPage(Integer page, Integer pageSize) {
-        return null;
+    public List<Employee> getEmployeesByPage(Integer page, Integer pageSize) {
+        int skipCount = (page - 1) * pageSize;
+        return employeesRepository.getEmployees()
+                .stream()
+                .skip(skipCount)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }

@@ -19,22 +19,19 @@ public class EmployeesController {
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployeesService();
     }
+
+
 //
 //    @GetMapping(path = "/{employeeID}")
 //    public Employee findByEmployeeID(@PathVariable int employeeID){
 //        return employees.stream().filter(employee -> employee.getId().equals(employeeID) ).findFirst().orElse( null );
 //    }
 //
-//    @GetMapping(params = {"page","pageSize"})
-//    public List<Employee> getEmployeesByPage(@RequestParam("page") Integer page,
-//                                              @RequestParam("pageSize") Integer pageSize) {
-//        int skipCount = (page - 1) * pageSize;
-//        return employees
-//                .stream()
-//                .skip(skipCount)
-//                .limit(pageSize)
-//                .collect(Collectors.toList());
-//    }
+    @GetMapping(params = {"page","pageSize"})
+    public List<Employee> getEmployeesByPage(@RequestParam("page") Integer page,
+                                              @RequestParam("pageSize") Integer pageSize) {
+        return employeeService.getEmployeesByPage(page,pageSize);
+    }
 //
 //    @GetMapping(params = {"gender"})
 //    public List<Employee> getEmployeesByGender(@RequestParam("gender") String gender) {
