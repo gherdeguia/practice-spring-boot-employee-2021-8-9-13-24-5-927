@@ -75,10 +75,12 @@ public class CompanyServiceTest {
         companies.add(new Company(3, "Xing", employees_list2));
         given(companyRepository.getAllCompanies()).willReturn(companies);
         //when
-        Company outputCompany = companyService.findCompanyByID(1);
+        Company outputCompany = companyService.findCompanyByIDService(1);
 
         //then
 
-        assertEquals(outputCompany, companies.get(1));
+        assertEquals(outputCompany, companies.get(0));
+        assertEquals(outputCompany.getId(), companies.get(0).getId());
+        assertEquals(outputCompany.getName(), companies.get(0).getName());
     }
 }

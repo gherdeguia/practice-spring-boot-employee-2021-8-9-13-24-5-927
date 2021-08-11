@@ -21,7 +21,11 @@ public class CompanyService {
         return companyRepository.getAllCompanies();
     }
 
-    public Company findCompanyByID(int companyID) {
-        return null;
+    public Company findCompanyByIDService(int companyID) {
+        return companyRepository.getAllCompanies()
+                .stream()
+                .filter(company -> company.getId().equals(companyID))
+                .findFirst()
+                .orElse(null);
     }
 }
