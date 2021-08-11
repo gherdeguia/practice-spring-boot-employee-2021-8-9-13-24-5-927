@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,17 +28,17 @@ public class EmployeeController {
     }
 
     @GetMapping()
-    private List<Employee> getAllEmployees(){
+    public List<Employee> getAllEmployees(){
         return employees;
     }
 
     @GetMapping(path = "/{employeeID}")
-    private Employee findByEmployeeID(@PathVariable int employeeID){
+    public Employee findByEmployeeID(@PathVariable int employeeID){
         return employees.stream().filter(employee -> employee.getId().equals(employeeID) ).findFirst().orElse( null );
     }
 
     @GetMapping(params = {"page","pageSize"})
-    private List<Employee> getEmployeesByPage(@RequestParam("page") Integer page,
+    public List<Employee> getEmployeesByPage(@RequestParam("page") Integer page,
                                               @RequestParam("pageSize") Integer pageSize) {
         int skipCount = (page - 1) * pageSize;
         return employees
@@ -48,11 +49,27 @@ public class EmployeeController {
     }
 
     @GetMapping(params = {"gender"})
-    private List<Employee> getEmployeesByGender(@RequestParam("gender") String gender) {
+    public List<Employee> getEmployeesByGender(@RequestParam("gender") String gender) {
 
         return employees
                 .stream()
                 .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
     }
+
+    @PostMapping
+    public void addNewEmployee(@RequestBody Employee employee){
+        int lastEmployeeID = employees.stream().max(Comparator.comparingInt(Employee::getId)).get().getId();
+        Employee newEmployee = new Employee( lastEmployeeID +1,
+                employee.getName(),
+                employee.getAge(),
+                employee.getGender(),
+                employee.getSalary()
+        );
+
+        employees.add(newEmployee);
+    }
+
+
+
 }
