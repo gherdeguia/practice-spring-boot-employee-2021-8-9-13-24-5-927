@@ -16,11 +16,11 @@ public class EmployeeService {
         this.employeesRepository = employeesRepository;
     }
 
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployeesService() {
         return employeesRepository.getEmployees();
     }
 
-    public Employee findByEmployeeID(int employeeID) {
+    public Employee findByEmployeeIDService(int employeeID) {
         return null;
     }
 

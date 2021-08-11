@@ -32,7 +32,7 @@ class EmployeeServiceTest {
         employees.add(new Employee(2, "jerry", 21, "male", 900));
         given(employeesRepository.getEmployees()).willReturn(employees);
         //when
-        List<Employee> actualEmployee = employeeService.getAllEmployees();
+        List<Employee> actualEmployee = employeeService.getAllEmployeesService();
 
         //then
         assertIterableEquals(employees, actualEmployee);
@@ -50,7 +50,7 @@ class EmployeeServiceTest {
         employees.add(new Employee(4, "josh", 21, "male", 3215));
         given(employeesRepository.getEmployees()).willReturn(employees);
         //when
-        Employee actualEmployee = employeeService.findByEmployeeID(3);
+        Employee actualEmployee = employeeService.findByEmployeeIDService(3);
 
         //then
         assertEquals(employees.get(2), actualEmployee);
