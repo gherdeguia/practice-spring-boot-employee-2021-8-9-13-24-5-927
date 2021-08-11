@@ -40,4 +40,8 @@ public class CompanyService {
                 .getEmployees();
 
     }
+
+    public List<Company> getCompaniesByPageService(int pageNumber, int pageSize) {
+        return null;
+    }
 }
