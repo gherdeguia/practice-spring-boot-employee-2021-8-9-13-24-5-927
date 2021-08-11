@@ -1,8 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.model.Directory;
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.model.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -46,6 +44,15 @@ public class EmployeeController {
                 .stream()
                 .skip(skipCount)
                 .limit(pageSize)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(params = {"gender"})
+    private List<Employee> getEmployeesByGender(@RequestParam("gender") String gender) {
+
+        return employees
+                .stream()
+                .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
     }
 }
