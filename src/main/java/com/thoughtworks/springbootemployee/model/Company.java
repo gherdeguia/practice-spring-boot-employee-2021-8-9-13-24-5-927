@@ -17,6 +17,12 @@ public class Company {
         this.employees = employees;
     }
 
+    public Company(String companyName, List<Employee> employees) {
+        this.id = null;
+        this.name = companyName;
+        this.employees = employees;
+    }
+
     public Integer getId() {
         return id;
     }
