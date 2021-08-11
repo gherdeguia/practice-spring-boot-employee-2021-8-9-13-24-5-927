@@ -179,4 +179,36 @@ public class CompanyServiceTest {
         assertEquals(companies.get(3).getId(), 4);
 
     }
+
+    @Test
+    public void should_update_company_when_put_given_company_details() {
+        //given
+        List<Employee> employees_list1 = new ArrayList<>();
+        List<Employee> employees_list2 = new ArrayList<>();
+        List<Company> companies = new ArrayList<>();
+
+        employees_list1.add(new Employee(1, "Edward Elric", 20, "male", 1000));
+        employees_list1.add(new Employee(2, "Alfonse Elric", 18, "male", 600));
+        employees_list1.add(new Employee(3, "Winry Rockbell", 20, "female", 900));
+
+        employees_list2.add(new Employee(1, "Ling Yao", 20, "male", 1000));
+        employees_list2.add(new Employee(2, "Lan Fan", 18, "female", 850));
+        employees_list2.add(new Employee(3, "Mei Chang", 16, "female", 900));
+
+        companies.add(new Company(1, "Amestris", employees_list1));
+        companies.add(new Company(2, "Xerxes", employees_list1));
+        companies.add(new Company(3, "Xing", employees_list1));
+
+        given(companyRepository.getAllCompanies()).willReturn(companies);
+
+        //when
+        Company companyToBeUpdated = new Company(2, "Xerxes II", employees_list2);
+        companyService.updateCompanyService(companyToBeUpdated);
+
+
+        //then
+        assertEquals(companyService.findCompanyByIDService(2).getName(), companyToBeUpdated.getName());
+        assertEquals(companyService.findCompanyByIDService(2).getEmployees(), companyToBeUpdated.getEmployees());
+
+    }
 }

@@ -64,4 +64,8 @@ public class CompanyService {
         );
         companyRepository.getAllCompanies().add(newCompany);
     }
+
+    public void updateCompanyService(Company companyToBeUpdated) {
+
+    }
 }
