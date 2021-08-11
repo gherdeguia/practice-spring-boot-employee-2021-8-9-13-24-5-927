@@ -118,9 +118,27 @@ class EmployeeServiceTest {
         given(employeesRepository.getEmployees()).willReturn(employees);
         //when
         Employee employee = new Employee(0, "Edward", 20, "male", 14567);
-        employeeService.addNewEmployee(employee);
+        employeeService.addNewEmployeeService(employee);
         //then
         assertEquals(employees.size(), 4);
+        assertEquals(employees.get(3).getId(), 7);
+
+    }
+
+    @Test
+    public void should_update_employee_when_put_given_employee_details() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+
+        employees.add(new Employee(8, "Winry", 23, "female", 1100));
+        employees.add(new Employee(9, "Edward", 23, "male", 1599));
+        employees.add(new Employee(10, "Alfonse", 21, "male", 2000));
+        given(employeesRepository.getEmployees()).willReturn(employees);
+        //when
+        Employee employeeToBeUpdated = new Employee(7, "Edward", 20, "male", 99999);
+        employeeService.updateEmployeeService(employeeToBeUpdated);
+        //then
+        assertEquals(employeeService.findByEmployeeIDService(9).getSalary(), employeeToBeUpdated.getSalary());
         assertEquals(employees.get(3).getId(), 7);
 
     }

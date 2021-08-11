@@ -46,7 +46,7 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public void addNewEmployee(Employee employee) {
+    public void addNewEmployeeService(Employee employee) {
         int lastEmployeeID = employeesRepository.getEmployees().stream().max(Comparator.comparingInt(Employee::getId)).get().getId();
         Employee newEmployee = new Employee( lastEmployeeID +1,
                 employee.getName(),
@@ -55,5 +55,9 @@ public class EmployeeService {
                 employee.getSalary()
         );
         employeesRepository.getEmployees().add(newEmployee);
+    }
+
+    public void updateEmployeeService(Employee employee) {
+
     }
 }
