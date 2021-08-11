@@ -29,12 +29,16 @@ public class EmployeeService {
                 .orElse(null);
     }
 
-    public List<Employee> getEmployeesByPage(Integer page, Integer pageSize) {
+    public List<Employee> getEmployeesByPageService(Integer page, Integer pageSize) {
         int skipCount = (page - 1) * pageSize;
         return employeesRepository.getEmployees()
                 .stream()
                 .skip(skipCount)
                 .limit(pageSize)
                 .collect(Collectors.toList());
+    }
+
+    public Employee findByEmployeeGenderService(String gender) {
+        return null;
     }
 }
