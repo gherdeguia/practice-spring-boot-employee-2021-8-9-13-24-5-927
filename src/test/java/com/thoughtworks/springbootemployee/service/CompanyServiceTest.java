@@ -42,15 +42,14 @@ public class CompanyServiceTest {
         employees_list2.add(new Employee(3, "Mei Chang", 16, "female", 900));
 
 
-        companies.add(new Company(1,"Amestris",employees_list1));
-        companies.add(new Company(2,"Xerxes",employees_list1));
-        companies.add(new Company(3,"Xing",employees_list2));
+        companies.add(new Company(1, "Amestris", employees_list1));
+        companies.add(new Company(2, "Xerxes", employees_list1));
+        companies.add(new Company(3, "Xing", employees_list2));
         given(companyRepository.getAllCompanies()).willReturn(companies);
         //when
         List<Company> actualCompanies = companyService.getAllCompaniesService();
 
         //then
         assertIterableEquals(companies, actualCompanies);
-
     }
 }
