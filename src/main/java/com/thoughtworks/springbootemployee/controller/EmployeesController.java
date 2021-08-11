@@ -38,20 +38,12 @@ public class EmployeesController {
 
         return employeeService.getEmployeeByGenderService(gender);
     }
-//
-//    @PostMapping
-//    public void addNewEmployee(@RequestBody Employee employee){
-//        int lastEmployeeID = employees.stream().max(Comparator.comparingInt(Employee::getId)).get().getId();
-//        Employee newEmployee = new Employee( lastEmployeeID +1,
-//                employee.getName(),
-//                employee.getAge(),
-//                employee.getGender(),
-//                employee.getSalary()
-//        );
-//
-//        employees.add(newEmployee);
-//    }
-//
+
+    @PostMapping
+    public void addNewEmployee(@RequestBody Employee employee){
+        employeeService.addNewEmployee(employee);
+    }
+
 //    @PutMapping(path = "/{employeeID}")
 //    public Employee updateEmployee(@PathVariable Integer employeeID,
 //                                   @RequestBody Employee employeeToBeUpdate) {
