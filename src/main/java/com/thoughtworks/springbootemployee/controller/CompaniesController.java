@@ -40,4 +40,15 @@ public class CompaniesController {
     public void addNewCompany(@RequestBody Company company){
         companyService.addNewCompanyService(company);
     }
+
+    @PutMapping(path = "/{companyID}")
+    public Company updateCompanyByID(@PathVariable Integer companyID,
+                                   @RequestBody Company companyToBeUpdated) {
+        return companyService.updateCompanyService(companyID, companyToBeUpdated);
+    }
+
+    @DeleteMapping(path="/{companyID}")
+    public void deleteCompanyByID(@PathVariable int companyID) {
+        companyService.deleteCompanyByIDService(companyID);
+    }
 }

@@ -82,4 +82,8 @@ public class CompanyService {
         }
         return company;
     }
+
+    public void deleteCompanyByIDService(int companyID) {
+
+    }
 }

@@ -211,4 +211,28 @@ public class CompanyServiceTest {
         assertEquals(companyService.findCompanyByIDService(2).getEmployees(), companyToBeUpdated.getEmployees());
 
     }
+
+    @Test
+    public void should_delete_company_when_post_given_company_id() {
+        //given
+        List<Employee> employees_list1 = new ArrayList<>();
+        List<Company> companies = new ArrayList<>();
+
+        employees_list1.add(new Employee(1, "Edward Elric", 20, "male", 1000));
+        employees_list1.add(new Employee(2, "Alfonse Elric", 18, "male", 600));
+        employees_list1.add(new Employee(3, "Winry Rockbell", 20, "female", 900));
+
+        companies.add(new Company(1, "Amestris", employees_list1));
+        companies.add(new Company(2, "Xerxes", employees_list1));
+        companies.add(new Company(3, "Xing", employees_list1));
+
+        given(companyRepository.getAllCompanies()).willReturn(companies);
+
+        //when
+        companyService.deleteCompanyByIDService(2);
+
+        //then
+        assertEquals(companies.size(),companyService.getAllCompaniesService().size());
+        assertNull(companyService.findCompanyByIDService(2));
+    }
 }
