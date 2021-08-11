@@ -116,7 +116,7 @@ class EmployeeServiceTest {
         employees.add(new Employee(6, "tomB", 20, "female", 1000));
         given(employeesRepository.getEmployees()).willReturn(employees);
         //when
-        Employee employee = new Employee(0, "Edward", 20, "male", 14567);
+        Employee employee = new Employee("Edward", 20, "male", 14567);
         employeeService.addNewEmployeeService(employee);
         //then
         assertEquals(employees.size(), 4);
