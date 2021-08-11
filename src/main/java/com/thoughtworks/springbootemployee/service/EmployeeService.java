@@ -48,11 +48,7 @@ public class EmployeeService {
     }
 
     public void addNewEmployeeService(Employee employee) {
-        int lastEmployeeID = employeesRepository.getEmployees()
-                .stream()
-                .max(Comparator.comparingInt(Employee::getId))
-                .get()
-                .getId();
+        int lastEmployeeID = getLastEmployeeID();
         Employee newEmployee = new Employee(lastEmployeeID + 1,
                 employee.getName(),
                 employee.getAge(),
@@ -60,6 +56,15 @@ public class EmployeeService {
                 employee.getSalary()
         );
         employeesRepository.getEmployees().add(newEmployee);
+    }
+
+    private int getLastEmployeeID() {
+        int lastEmployeeID = employeesRepository.getEmployees()
+                .stream()
+                .max(Comparator.comparingInt(Employee::getId))
+                .get()
+                .getId();
+        return lastEmployeeID;
     }
 
     public Employee updateEmployeeService(Integer employeeID, Employee employeeToBeUpdate) {

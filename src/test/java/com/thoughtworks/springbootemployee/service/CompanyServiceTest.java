@@ -78,9 +78,9 @@ public class CompanyServiceTest {
 
         //then
 
-        assertEquals(outputCompany, companies.get(0));
-        assertEquals(outputCompany.getId(), companies.get(0).getId());
-        assertEquals(outputCompany.getName(), companies.get(0).getName());
+        assertEquals(companies.get(0),outputCompany);
+        assertEquals(companies.get(0).getId(),outputCompany.getId());
+        assertEquals(companies.get(0).getName(),outputCompany.getName());
     }
     @Test
     public void should_return_employees_when_get_given_company_id() {
@@ -106,8 +106,8 @@ public class CompanyServiceTest {
         List<Employee> outputCompanyEmployees = companyService.getEmployeesByCompanyID(3);
 
         //then
-
-        assertEquals(outputCompanyEmployees, employees_list2);
+        assertIterableEquals(employees_list2,outputCompanyEmployees);
+        assertEquals(employees_list2,outputCompanyEmployees);
     }
 
     @Test
@@ -116,40 +116,31 @@ public class CompanyServiceTest {
         List<Employee> employees_list1 = new ArrayList<>();
         List<Employee> employees_list2 = new ArrayList<>();
         List<Company> companies = new ArrayList<>();
-        List<Company> page1 = new ArrayList<>();
 
         employees_list1.add(new Employee(1, "Edward Elric", 20, "male", 1000));
         employees_list1.add(new Employee(2, "Alfonse Elric", 18, "male", 600));
         employees_list1.add(new Employee(3, "Winry Rockbell", 20, "female", 900));
 
-        employees_list2.add(new Employee(1, "Ling Yao", 20, "male", 1000));
-        employees_list2.add(new Employee(2, "Lan Fan", 18, "female", 850));
-        employees_list2.add(new Employee(3, "Mei Chang", 16, "female", 900));
-
-
         companies.add(new Company(1, "Amestris", employees_list1));
         companies.add(new Company(2, "Xerxes", employees_list1));
-        companies.add(new Company(3, "Xing", employees_list2));
-        companies.add(new Company(4, "Marley", employees_list2));
-        companies.add(new Company(5, "CERN", employees_list2));
+        companies.add(new Company(3, "Xing", employees_list1));
+        companies.add(new Company(4, "Marley", employees_list1));
+        companies.add(new Company(5, "CERN", employees_list1));
         companies.add(new Company(6, "DLSI", employees_list1));
         companies.add(new Company(7, "Prime", employees_list1));
-        companies.add(new Company(8, "Big Pegs", employees_list2));
+        companies.add(new Company(8, "Big Pegs", employees_list1));
         given(companyRepository.getAllCompanies()).willReturn(companies);
-
-        page1.add(new Company(1, "Amestris", employees_list1));
-        page1.add(new Company(2, "Xerxes", employees_list1));
-        page1.add(new Company(3, "Xing", employees_list2));
-        page1.add(new Company(4, "Marley", employees_list2));
-        page1.add(new Company(5, "CERN", employees_list2));
 
         //when
         List<Company> outputCompaniesByPages = companyService.getCompaniesByPageService(1,5);
 
         //then
-        assertEquals(page1.size(), outputCompaniesByPages.size());
-        assertEquals(page1.get(0).getName(), outputCompaniesByPages.get(0).getName());
-        assertEquals(page1.get(1).getName(), outputCompaniesByPages.get(1).getName());
+        assertEquals(5, outputCompaniesByPages.size());
+        assertEquals(1, outputCompaniesByPages.get(0).getId());
+        assertEquals(2, outputCompaniesByPages.get(1).getId());
+        assertEquals(3, outputCompaniesByPages.get(2).getId());
+        assertEquals(4, outputCompaniesByPages.get(3).getId());
+        assertEquals(5, outputCompaniesByPages.get(4).getId());
     }
 
     @Test
@@ -166,6 +157,7 @@ public class CompanyServiceTest {
         companies.add(new Company(1, "Amestris", employees_list1));
         companies.add(new Company(2, "Xerxes", employees_list1));
         companies.add(new Company(3, "Xing", employees_list1));
+        companies.add(new Company(4, "PRIME", employees_list1));
 
         given(companyRepository.getAllCompanies()).willReturn(companies);
 
@@ -175,8 +167,8 @@ public class CompanyServiceTest {
 
 
         //then
-        assertEquals(companies.size(), 4);
-        assertEquals(companies.get(3).getId(), 4);
+        assertEquals(5,companies.size());
+        assertEquals(4, companies.get(3).getId());
 
     }
 
@@ -232,7 +224,7 @@ public class CompanyServiceTest {
         companyService.deleteCompanyByIDService(2);
 
         //then
-        assertEquals(companies.size(),companyService.getAllCompaniesService().size());
+        assertEquals(companyService.getAllCompaniesService().size(), companies.size());
         assertNull(companyService.findCompanyByIDService(2));
     }
 }
