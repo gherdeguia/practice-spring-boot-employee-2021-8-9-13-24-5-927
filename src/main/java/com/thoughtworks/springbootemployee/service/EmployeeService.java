@@ -21,11 +21,7 @@ public class EmployeeService {
     }
 
     public Employee findByEmployeeID(int employeeID) {
-        return employeesRepository.getEmployees()
-                .stream()
-                .filter(employee -> employee.getId().equals(employeeID))
-                .findFirst()
-                .orElse(null);
+        return null;
     }
 
 }
