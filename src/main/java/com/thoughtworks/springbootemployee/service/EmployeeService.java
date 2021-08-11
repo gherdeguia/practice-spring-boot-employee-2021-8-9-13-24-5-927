@@ -28,4 +28,7 @@ public class EmployeeService {
                 .orElse(null);
     }
 
+    public Employee getEmployeesByPage(Integer page, Integer pageSize) {
+        return null;
+    }
 }

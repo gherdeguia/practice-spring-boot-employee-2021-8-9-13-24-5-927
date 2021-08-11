@@ -57,4 +57,27 @@ class EmployeeServiceTest {
 
     }
 
+    @Test
+    public void should_return_employee_list_with_pagination_when_getEmployeesByPage_given_page_and_page_size() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+
+//        employees.add(new Employee(1, "tom", 20, "female", 1000));
+//        employees.add(new Employee(2, "jerry", 21, "male", 900));
+//        employees.add(new Employee(3, "hayley", 20, "female", 12345));
+//        employees.add(new Employee(4, "josh", 21, "male", 3215));
+//        given(employeesRepository.getEmployees()).willReturn(employees);
+        employees.add(new Employee(6, "tomB", 20, "female", 1000));
+        employees.add(new Employee(7, "jerryB", 21, "male", 900));
+        employees.add(new Employee(8, "GerarldB", 23, "male", 1100));
+        employees.add(new Employee(9, "LorenzB", 21, "male", 800));
+        employees.add(new Employee(10, "FalconB", 21, "male", 2000));
+        //when
+        Employee paginationEmployees = employeeService.getEmployeesByPage(2,5);
+
+        //then
+        assertEquals(employees, paginationEmployees);
+
+    }
+
 }
