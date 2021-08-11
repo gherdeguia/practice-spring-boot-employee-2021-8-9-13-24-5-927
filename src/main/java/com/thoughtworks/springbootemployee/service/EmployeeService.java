@@ -84,4 +84,7 @@ public class EmployeeService {
         return employee;
     }
 
+    public void deleteEmployeeService(Integer employeeID) {
+
+    }
 }
