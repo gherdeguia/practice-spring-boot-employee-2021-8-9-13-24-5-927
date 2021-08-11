@@ -51,7 +51,6 @@ public class CompanyService {
                 .collect(Collectors.toList());
     }
 
-
     public void addNewCompanyService(Company company) {
         int lastCompanyID = companyRepository.getAllCompanies()
                 .stream()
@@ -84,11 +83,6 @@ public class CompanyService {
     }
 
     public void deleteCompanyByIDService(int companyID) {
-        Company companyToDelete = companyRepository.getAllCompanies()
-                .stream()
-                .filter(company -> company.getId().equals(companyID))
-                .findFirst()
-                .orElse(null);
-        companyRepository.getAllCompanies().remove(companyToDelete);
+        companyRepository.getAllCompanies().remove(findCompanyByIDService(companyID));
     }
 }

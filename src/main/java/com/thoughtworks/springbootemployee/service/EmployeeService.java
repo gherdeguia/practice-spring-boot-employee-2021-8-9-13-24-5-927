@@ -48,8 +48,12 @@ public class EmployeeService {
     }
 
     public void addNewEmployeeService(Employee employee) {
-        int lastEmployeeID = employeesRepository.getEmployees().stream().max(Comparator.comparingInt(Employee::getId)).get().getId();
-        Employee newEmployee = new Employee( lastEmployeeID +1,
+        int lastEmployeeID = employeesRepository.getEmployees()
+                .stream()
+                .max(Comparator.comparingInt(Employee::getId))
+                .get()
+                .getId();
+        Employee newEmployee = new Employee(lastEmployeeID + 1,
                 employee.getName(),
                 employee.getAge(),
                 employee.getGender(),
@@ -60,9 +64,9 @@ public class EmployeeService {
 
     public Employee updateEmployeeService(Integer employeeID, Employee employeeToBeUpdate) {
         return employeesRepository.getEmployees().stream()
-                .filter(employee -> employee.getId().equals(employeeID) )
+                .filter(employee -> employee.getId().equals(employeeID))
                 .findFirst()
-                .map(employee -> updateEmployeeInfo(employee,employeeToBeUpdate))
+                .map(employee -> updateEmployeeInfo(employee, employeeToBeUpdate))
                 .get();
     }
 
@@ -83,11 +87,6 @@ public class EmployeeService {
     }
 
     public void deleteEmployeeService(Integer employeeID) {
-        Employee employeeToDelete = employeesRepository.getEmployees()
-                .stream()
-                .filter(employee -> employee.getId().equals(employeeID))
-                .findFirst()
-                .orElse(null);
-        employeesRepository.getEmployees().remove(employeeToDelete);
+        employeesRepository.getEmployees().remove(findByEmployeeIDService(employeeID));
     }
 }
