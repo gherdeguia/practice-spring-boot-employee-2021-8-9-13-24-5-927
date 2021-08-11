@@ -107,4 +107,22 @@ class EmployeeServiceTest {
 
     }
 
+    @Test
+    public void should_add_employee_when_post_given_employee_details() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+
+        employees.add(new Employee(4, "Lorenz", 21, "male", 800));
+        employees.add(new Employee(5, "Falcon", 21, "male", 2000));
+        employees.add(new Employee(6, "tomB", 20, "female", 1000));
+        given(employeesRepository.getEmployees()).willReturn(employees);
+        //when
+        Employee employee = new Employee(6, "Edward", 20, "male", 14567);
+
+        //then
+        assertEquals(employees.size(), 4);
+        assertEquals(employees.get(3).getId(), employee.getId());
+
+    }
+
 }
