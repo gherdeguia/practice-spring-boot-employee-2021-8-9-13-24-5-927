@@ -19,6 +19,7 @@ public class CompanyRepository {
         companyRepository.add(new Company(2, "BigPegs", employees));
         companyRepository.add(new Company(3, "Prime", employees));
         companyRepository.add(new Company(4, "DLSI", employees));
+        companyRepository.add(new Company(5, "Amestris", employees));
     }
 
     private void populateEmployees() {

@@ -13,8 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -148,6 +147,10 @@ public class CompanyServiceTest {
         List<Company> outputCompaniesByPages = companyService.getCompaniesByPageService(1,5);
 
         //then
-        assertEquals(outputCompaniesByPages, page1);
+        assertEquals(page1.size(), outputCompaniesByPages.size());
+        assertEquals(page1.get(0).getName(), outputCompaniesByPages.get(0).getName());
+        assertEquals(page1.get(1).getName(), outputCompaniesByPages.get(1).getName());
     }
+
+    
 }

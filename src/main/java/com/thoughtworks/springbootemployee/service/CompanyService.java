@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
@@ -38,10 +39,19 @@ public class CompanyService {
                 .findFirst()
                 .orElse(null))
                 .getEmployees();
-
     }
 
     public List<Company> getCompaniesByPageService(int pageNumber, int pageSize) {
-        return null;
+        int skipCount = (pageNumber - 1) * pageSize;
+        return companyRepository.getAllCompanies()
+                .stream()
+                .skip(skipCount)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
+
+
+    public void addNewCompanyService(Company company) {
+
     }
 }
