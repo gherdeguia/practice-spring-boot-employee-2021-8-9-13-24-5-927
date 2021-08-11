@@ -100,10 +100,10 @@ class EmployeeServiceTest {
         employees.add(new Employee(6, "tomB", 20, "female", 1000));
         given(employeesRepository.getEmployees()).willReturn(employees);
         //when
-        Employee actualEmployee = employeeService.findByEmployeeGenderService("female");
+        List<Employee> actualEmployees = employeeService.getEmployeeByGenderService("female");
 
         //then
-        assertEquals(employees.get(2).getGender(), actualEmployee.getGender());
+        assertEquals(employees.get(2).getGender(), actualEmployees.get(0).getGender());
 
     }
 

@@ -38,7 +38,10 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public Employee findByEmployeeGenderService(String gender) {
-        return null;
+    public List<Employee> getEmployeeByGenderService(String gender) {
+        return employeesRepository.getEmployees()
+                .stream()
+                .filter(employee -> employee.getGender().equals(gender))
+                .collect(Collectors.toList());
     }
 }
