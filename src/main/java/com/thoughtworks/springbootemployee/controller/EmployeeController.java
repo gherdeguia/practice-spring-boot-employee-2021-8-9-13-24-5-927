@@ -98,4 +98,11 @@ public class EmployeeController {
         }
         return employee;
     }
+
+    @DeleteMapping(path="/{employeeID}")
+    public void deleteEmployeeByID(@PathVariable int employeeID) {
+        Employee employeeToDelete = employees.stream().filter(employee -> employee.getId().equals(employeeID)).findFirst().orElse(null);
+        employees.remove(employeeToDelete);
+    }
+
 }
