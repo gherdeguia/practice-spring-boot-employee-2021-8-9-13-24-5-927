@@ -35,4 +35,9 @@ public class CompaniesController {
                                              @RequestParam("pageSize") Integer pageSize) {
         return companyService.getCompaniesByPageService(page,pageSize);
     }
+
+    @PostMapping
+    public void addNewCompany(@RequestBody Company company){
+        companyService.addNewCompanyService(company);
+    }
 }

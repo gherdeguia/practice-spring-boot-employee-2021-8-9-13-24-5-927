@@ -6,6 +6,7 @@ import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -52,6 +53,15 @@ public class CompanyService {
 
 
     public void addNewCompanyService(Company company) {
-
+        int lastCompanyID = companyRepository.getAllCompanies()
+                .stream()
+                .max(Comparator.comparingInt(Company::getId))
+                .get()
+                .getId();
+        Company newCompany = new Company( lastCompanyID +1,
+                company.getName(),
+                company.getEmployees()
+        );
+        companyRepository.getAllCompanies().add(newCompany);
     }
 }
