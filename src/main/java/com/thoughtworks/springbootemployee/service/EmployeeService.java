@@ -59,13 +59,11 @@ public class EmployeeService {
     }
 
     public Employee updateEmployeeService(Integer employeeID, Employee employeeToBeUpdate) {
-        Employee employeeToBeUpdated = employeesRepository.getEmployees().stream()
+        return employeesRepository.getEmployees().stream()
                 .filter(employee -> employee.getId().equals(employeeID) )
                 .findFirst()
                 .map(employee -> updateEmployeeInfo(employee,employeeToBeUpdate))
                 .get();
-
-        return employeeToBeUpdated;
     }
 
     private Employee updateEmployeeInfo(Employee employee, Employee employeeToBeUpdate) {
@@ -85,7 +83,11 @@ public class EmployeeService {
     }
 
     public void deleteEmployeeService(Integer employeeID) {
-        Employee employeeToDelete = employeesRepository.getEmployees().stream().filter(employee -> employee.getId().equals(employeeID)).findFirst().orElse(null);
+        Employee employeeToDelete = employeesRepository.getEmployees()
+                .stream()
+                .filter(employee -> employee.getId().equals(employeeID))
+                .findFirst()
+                .orElse(null);
         employeesRepository.getEmployees().remove(employeeToDelete);
     }
 }
