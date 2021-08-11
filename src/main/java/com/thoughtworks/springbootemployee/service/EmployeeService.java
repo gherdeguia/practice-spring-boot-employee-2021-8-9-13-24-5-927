@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,7 +58,30 @@ public class EmployeeService {
         employeesRepository.getEmployees().add(newEmployee);
     }
 
-    public void updateEmployeeService(Employee employee) {
+    public Employee updateEmployeeService(Integer employeeID, Employee employeeToBeUpdate) {
+        Employee employeeToBeUpdated = employeesRepository.getEmployees().stream()
+                .filter(employee -> employee.getId().equals(employeeID) )
+                .findFirst()
+                .map(employee -> updateEmployeeInfo(employee,employeeToBeUpdate))
+                .get();
 
+        return employeeToBeUpdated;
     }
+
+    private Employee updateEmployeeInfo(Employee employee, Employee employeeToBeUpdate) {
+        if (!Objects.isNull(employeeToBeUpdate.getName())) {
+            employee.setName(employeeToBeUpdate.getName());
+        }
+        if (!Objects.isNull(employeeToBeUpdate.getAge())) {
+            employee.setAge(employeeToBeUpdate.getAge());
+        }
+        if (!Objects.isNull(employeeToBeUpdate.getGender())) {
+            employee.setGender(employeeToBeUpdate.getGender());
+        }
+        if (!Objects.isNull(employeeToBeUpdate.getSalary())) {
+            employee.setSalary(employeeToBeUpdate.getSalary());
+        }
+        return employee;
+    }
+
 }

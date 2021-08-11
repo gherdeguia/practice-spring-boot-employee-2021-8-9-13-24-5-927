@@ -20,13 +20,11 @@ public class EmployeesController {
         return employeeService.getAllEmployeesService();
     }
 
+    @GetMapping(path = "/{employeeID}")
+    public Employee findByEmployeeID(@PathVariable int employeeID){
+        return employeeService.findByEmployeeIDService(employeeID);
+    }
 
-//
-//    @GetMapping(path = "/{employeeID}")
-//    public Employee findByEmployeeID(@PathVariable int employeeID){
-//        return employees.stream().filter(employee -> employee.getId().equals(employeeID) ).findFirst().orElse( null );
-//    }
-//
     @GetMapping(params = {"page","pageSize"})
     public List<Employee> getEmployeesByPage(@RequestParam("page") Integer page,
                                               @RequestParam("pageSize") Integer pageSize) {
@@ -44,34 +42,12 @@ public class EmployeesController {
         employeeService.addNewEmployeeService(employee);
     }
 
-//    @PutMapping(path = "/{employeeID}")
-//    public Employee updateEmployee(@PathVariable Integer employeeID,
-//                                   @RequestBody Employee employeeToBeUpdate) {
-//        Employee employeeToBeUpdated = employees.stream()
-//                .filter(employee -> employee.getId().equals(employeeID) )
-//                .findFirst()
-//                .map(employee -> updateEmployeeInfo(employee,employeeToBeUpdate))
-//                .get();
-//
-//        return employeeToBeUpdated;
-//    }
-//
-//    private Employee updateEmployeeInfo(Employee employee, Employee employeeToBeUpdate) {
-//        if (!Objects.isNull(employeeToBeUpdate.getName())) {
-//            employee.setName(employeeToBeUpdate.getName());
-//        }
-//        if (!Objects.isNull(employeeToBeUpdate.getAge())) {
-//            employee.setAge(employeeToBeUpdate.getAge());
-//        }
-//        if (!Objects.isNull(employeeToBeUpdate.getGender())) {
-//            employee.setGender(employeeToBeUpdate.getGender());
-//        }
-//        if (!Objects.isNull(employeeToBeUpdate.getSalary())) {
-//            employee.setSalary(employeeToBeUpdate.getSalary());
-//        }
-//        return employee;
-//    }
-//
+    @PutMapping(path = "/{employeeID}")
+    public Employee updateEmployee(@PathVariable Integer employeeID,
+                                   @RequestBody Employee employeeToBeUpdate) {
+        return employeeService.updateEmployeeService(employeeID, employeeToBeUpdate);
+    }
+
 //    @DeleteMapping(path="/{employeeID}")
 //    public void deleteEmployeeByID(@PathVariable int employeeID) {
 //        Employee employeeToDelete = employees.stream().filter(employee -> employee.getId().equals(employeeID)).findFirst().orElse(null);

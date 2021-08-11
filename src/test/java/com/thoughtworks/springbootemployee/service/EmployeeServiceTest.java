@@ -135,11 +135,12 @@ class EmployeeServiceTest {
         employees.add(new Employee(10, "Alfonse", 21, "male", 2000));
         given(employeesRepository.getEmployees()).willReturn(employees);
         //when
-        Employee employeeToBeUpdated = new Employee(7, "Edward", 20, "male", 99999);
-        employeeService.updateEmployeeService(employeeToBeUpdated);
+        Employee employeeToBeUpdated = new Employee(9, "Edward Elric", 20, "male", 99999);
+        employeeService.updateEmployeeService(9,employeeToBeUpdated);
         //then
         assertEquals(employeeService.findByEmployeeIDService(9).getSalary(), employeeToBeUpdated.getSalary());
-        assertEquals(employees.get(3).getId(), 7);
+        assertEquals(employeeService.findByEmployeeIDService(9).getAge(), 20);
+        assertEquals(employeeService.findByEmployeeIDService(9).getName(), "Edward Elric");
 
     }
 
