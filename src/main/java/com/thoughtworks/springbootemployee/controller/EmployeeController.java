@@ -36,8 +36,8 @@ public class EmployeeController {
         return employees.stream().filter(employee -> employee.getId().equals(employeeID) ).findFirst().orElse( null );
     }
 
-    @GetMapping(params = {"pageNumber","pageSize"})
-    private List<Employee> getEmployeesByPage(@RequestParam("pageNumber") Integer pageNumber,
+    @GetMapping(params = {"page","pageSize"})
+    private List<Employee> getEmployeesByPage(@RequestParam("page") Integer pageNumber,
                                               @RequestParam("pageSize") Integer pageSize) {
         int skipCount = (pageNumber - 1) * pageSize;
         return employees
