@@ -38,22 +38,7 @@ public class EmployeeService {
     }
 
     public void addNewEmployeeService(Employee employee) {
-        int lastEmployeeID = getLastEmployeeID();
-        Employee newEmployee = new Employee(lastEmployeeID + 1,
-                employee.getName(),
-                employee.getAge(),
-                employee.getGender(),
-                employee.getSalary()
-        );
-        olderEmployeeRepository.getEmployees().add(newEmployee);
-    }
-
-    private int getLastEmployeeID() {
-        return Objects.requireNonNull(olderEmployeeRepository.getEmployees()
-                .stream()
-                .max(Comparator.comparingInt(Employee::getId))
-                .orElse(null))
-                .getId();
+        employeesRepository.save(employee);
     }
 
     public Employee updateEmployeeService(Integer employeeID, Employee employeeToBeUpdate) {
