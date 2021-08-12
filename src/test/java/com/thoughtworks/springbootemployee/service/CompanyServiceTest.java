@@ -2,7 +2,7 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.Old_CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.Old_EmployeesRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +23,7 @@ public class CompanyServiceTest {
     private EmployeeService employeeService;
 
     @Mock
-    private CompanyRepository companyRepository;
+    private Old_CompanyRepository oldCompanyRepository;
     private Old_EmployeesRepository employeesRepository;
 
     @Test
@@ -45,7 +45,7 @@ public class CompanyServiceTest {
         companies.add(new Company(1, "Amestris", employees_list1));
         companies.add(new Company(2, "Xerxes", employees_list1));
         companies.add(new Company(3, "Xing", employees_list2));
-        given(companyRepository.getAllCompanies()).willReturn(companies);
+        given(oldCompanyRepository.getAllCompanies()).willReturn(companies);
         //when
         List<Company> actualCompanies = companyService.getAllCompaniesService();
 
@@ -72,7 +72,7 @@ public class CompanyServiceTest {
         companies.add(new Company(1, "Amestris", employees_list1));
         companies.add(new Company(2, "Xerxes", employees_list1));
         companies.add(new Company(3, "Xing", employees_list2));
-        given(companyRepository.getAllCompanies()).willReturn(companies);
+        given(oldCompanyRepository.getAllCompanies()).willReturn(companies);
         //when
         Company outputCompany = companyService.findCompanyByIDService(1);
 
@@ -80,7 +80,7 @@ public class CompanyServiceTest {
 
         assertEquals(companies.get(0), outputCompany);
         assertEquals(companies.get(0).getId(), outputCompany.getId());
-        assertEquals(companies.get(0).getName(), outputCompany.getName());
+        assertEquals(companies.get(0).getCompanyName(), outputCompany.getCompanyName());
     }
 
     @Test
@@ -102,7 +102,7 @@ public class CompanyServiceTest {
         companies.add(new Company(1, "Amestris", employees_list1));
         companies.add(new Company(2, "Xerxes", employees_list1));
         companies.add(new Company(3, "Xing", employees_list2));
-        given(companyRepository.getAllCompanies()).willReturn(companies);
+        given(oldCompanyRepository.getAllCompanies()).willReturn(companies);
         //when
         List<Employee> outputCompanyEmployees = companyService.getEmployeesByCompanyID(3);
 
@@ -130,7 +130,7 @@ public class CompanyServiceTest {
         companies.add(new Company(6, "DLSI", employees_list1));
         companies.add(new Company(7, "Prime", employees_list1));
         companies.add(new Company(8, "Big Pegs", employees_list1));
-        given(companyRepository.getAllCompanies()).willReturn(companies);
+        given(oldCompanyRepository.getAllCompanies()).willReturn(companies);
 
         //when
         List<Company> outputCompaniesByPages = companyService.getCompaniesByPageService(1, 5);
@@ -160,7 +160,7 @@ public class CompanyServiceTest {
         companies.add(new Company(3, "Xing", employees_list1));
         companies.add(new Company(4, "PRIME", employees_list1));
 
-        given(companyRepository.getAllCompanies()).willReturn(companies);
+        given(oldCompanyRepository.getAllCompanies()).willReturn(companies);
 
         //when
         Company company = new Company("CERN", employees_list1);
@@ -192,7 +192,7 @@ public class CompanyServiceTest {
         companies.add(new Company(2, "Xerxes", employees_list1));
         companies.add(new Company(3, "Xing", employees_list1));
 
-        given(companyRepository.getAllCompanies()).willReturn(companies);
+        given(oldCompanyRepository.getAllCompanies()).willReturn(companies);
 
         //when
         Company companyToBeUpdated = new Company(2, "Xerxes II", employees_list2);
@@ -201,8 +201,8 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(
-                companyService.findCompanyByIDService(2).getName(),
-                companyToBeUpdated.getName()
+                companyService.findCompanyByIDService(2).getCompanyName(),
+                companyToBeUpdated.getCompanyName()
         );
         assertEquals(
                 companyService.findCompanyByIDService(2).getEmployees(),
@@ -225,7 +225,7 @@ public class CompanyServiceTest {
         companies.add(new Company(2, "Xerxes", employees_list1));
         companies.add(new Company(3, "Xing", employees_list1));
 
-        given(companyRepository.getAllCompanies()).willReturn(companies);
+        given(oldCompanyRepository.getAllCompanies()).willReturn(companies);
 
         //when
         companyService.deleteCompanyByIDService(2);

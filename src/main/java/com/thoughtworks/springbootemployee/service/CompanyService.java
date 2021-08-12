@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.Old_CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +15,18 @@ import java.util.stream.Collectors;
 @Service
 public class CompanyService {
     @Autowired
-    private final CompanyRepository companyRepository;
+    private Old_CompanyRepository oldCompanyRepository;
 
+    @Autowired
+    private CompanyRepository companyRepository;
 
-    public CompanyService(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-    }
 
     public List<Company> getAllCompaniesService() {
-        return companyRepository.getAllCompanies();
+        return companyRepository.findAll();
     }
 
     public Company findCompanyByIDService(int companyID) {
-        return companyRepository.getAllCompanies()
+        return oldCompanyRepository.getAllCompanies()
                 .stream()
                 .filter(company -> company.getId().equals(companyID))
                 .findFirst()
@@ -47,20 +47,20 @@ public class CompanyService {
     }
 
     public void addNewCompanyService(Company company) {
-        int lastCompanyID = Objects.requireNonNull(companyRepository.getAllCompanies()
+        int lastCompanyID = Objects.requireNonNull(oldCompanyRepository.getAllCompanies()
                 .stream()
                 .max(Comparator.comparingInt(Company::getId))
                 .orElse(null))
                 .getId();
         Company newCompany = new Company( lastCompanyID +1,
-                company.getName(),
+                company.getCompanyName(),
                 company.getEmployees()
         );
-        companyRepository.getAllCompanies().add(newCompany);
+        oldCompanyRepository.getAllCompanies().add(newCompany);
     }
 
     public Company updateCompanyService(int companyID, Company companyToBeUpdated) {
-        return companyRepository.getAllCompanies().stream()
+        return oldCompanyRepository.getAllCompanies().stream()
                 .filter(company -> company.getId().equals(companyID) )
                 .findFirst()
                 .map(company -> updateCompanyInfo(company,companyToBeUpdated))
@@ -68,8 +68,8 @@ public class CompanyService {
     }
 
     private Company updateCompanyInfo(Company company, Company companyToBeUpdated) {
-        if (!Objects.isNull(companyToBeUpdated.getName())) {
-            company.setName(companyToBeUpdated.getName());
+        if (!Objects.isNull(companyToBeUpdated.getCompanyName())) {
+            company.setCompanyName(companyToBeUpdated.getCompanyName());
         }
         if (!Objects.isNull(companyToBeUpdated.getEmployees())) {
             company.setEmployees(companyToBeUpdated.getEmployees());
@@ -78,6 +78,6 @@ public class CompanyService {
     }
 
     public void deleteCompanyByIDService(int companyID) {
-        companyRepository.getAllCompanies().remove(findCompanyByIDService(companyID));
+        oldCompanyRepository.getAllCompanies().remove(findCompanyByIDService(companyID));
     }
 }
