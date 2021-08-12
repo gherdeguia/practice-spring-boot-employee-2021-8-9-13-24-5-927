@@ -55,24 +55,51 @@ public class EmployeeIntegrationTest {
     @Test
     void should_add_employee_when_post_given_employee_details() throws Exception {
         final Employee employee = new Employee(1,"GG",20,"male",2021);
+        employeesRepository.save(employee);
         String employeeToAdd = "{\n" +
-                "        \"id\": 33,\n" +
-                "        \"name\": \"GG\",\n" +
+                "        \"name\": \"GGWP\",\n" +
                 "        \"age\": 123,\n" +
                 "        \"gender\": \"male\",\n" +
-                "        \"salary\": 1234,\n" +
+                "        \"salary\": 1234\n" +
                 "    }";
 
         mockMvc.perform(MockMvcRequestBuilders.post("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(employeeToAdd)
                 )
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value("GG"))
-                .andExpect(jsonPath("$.age").value(123))
-                .andExpect(jsonPath("$.gender").value("male"))
-                .andExpect(jsonPath("$.salary").value(1234))
-                .andExpect(jsonPath("$.companyId").value(1))
-                ;
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[1].name").value("GGWP"));
+
+//                        .andExpect(jsonPath("$.name").value("GG"))
+//                .andExpect(jsonPath("$.age").value(123))
+//                .andExpect(jsonPath("$.gender").value("male"))
+//                .andExpect(jsonPath("$.salary").value(1234))
+//                .andExpect(jsonPath("$.companyId").value(1))
+    }
+
+    @Test
+    void should_update_employee_when_call_update_employee_api() throws Exception {
+        //given
+        final Employee employee = new Employee("GG",20,"male",2021);
+        final Employee savedEmployee = employeesRepository.save(employee);
+        String employeeToUpdate = "{\n" +
+                "        \"name\": \"GGWP\",\n" +
+                "        \"age\": 123,\n" +
+                "        \"gender\": \"male\",\n" +
+                "        \"salary\": 2022\n" +
+                "    }";
+        //when
+        //then
+        int id = savedEmployee.getId();
+        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}",id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employeeToUpdate)
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("GGWP"))
+        ;
     }
 }
