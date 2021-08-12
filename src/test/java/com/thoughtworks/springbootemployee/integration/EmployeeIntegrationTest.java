@@ -103,15 +103,18 @@ public class EmployeeIntegrationTest {
         Employee employee1 = new Employee("GG",20,"male",2021);
         Employee employee2 = new Employee("Edward",19,"male",1223);
         Employee employee3 = new Employee("Winry",18,"female",1123);
+        Employee employee4 = new Employee("Lan Fan",18,"female",2123);
         employeesRepository.save(employee1);
         employeesRepository.save(employee2);
         employeesRepository.save(employee3);
+        employeesRepository.save(employee4);
         //when
         String gender = employee3.getGender();
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/?gender={gender}",gender))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].gender").value(gender))
+                .andExpect(jsonPath("$[1].gender").value(gender))
         ;
     }
 
