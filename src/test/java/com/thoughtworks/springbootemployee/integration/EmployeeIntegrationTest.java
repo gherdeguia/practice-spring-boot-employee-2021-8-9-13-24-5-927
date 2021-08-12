@@ -3,7 +3,6 @@ package com.thoughtworks.springbootemployee.integration;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeesRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -73,10 +72,6 @@ public class EmployeeIntegrationTest {
                 .content(employeeToAdd)
                 )
                 .andExpect(status().isCreated());
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[1].name").value("GGWP"));
     }
 
     @Test
@@ -135,7 +130,6 @@ public class EmployeeIntegrationTest {
         employeesRepository.save(employee5);
         employeesRepository.save(employee6);
         //when
-        String gender = employee3.getGender();
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees")
                     .param("page", String.valueOf(2))
@@ -144,6 +138,23 @@ public class EmployeeIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value("Greed"))
                 .andExpect(jsonPath("$[1].name").value("Sloth"))
+        ;
+    }
+
+    @Test
+    void should_delete_employee_when_call_delete_given_employee_id() throws Exception {
+        //given
+        Employee employee1 = new Employee("GG",20,"male",2021);
+        Employee employee2 = new Employee("Edward",19,"male",1223);
+        Employee employee3 = new Employee("Winry",18,"female",9999);
+        employeesRepository.save(employee1);
+        employeesRepository.save(employee2);
+        employeesRepository.save(employee3);
+        //when
+        //then
+        Integer id = employee2.getId();
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}",id))
+                .andExpect(status().isOk())
         ;
 
     }

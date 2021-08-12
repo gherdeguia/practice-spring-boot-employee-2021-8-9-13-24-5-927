@@ -24,7 +24,7 @@ public class Old_CompanyRepository {
 
     private void populateEmployees() {
         employees.add(new Employee(1, "Winry", 20, "female", 1000));
-        employees.add(new Employee(2, "Linlin", 21, "female", 900));
+        employees.add(new Employee(2, "Lan Fan", 21, "female", 900));
         employees.add(new Employee(3, "GG", 23, "male", 1100));
         employees.add(new Employee(4, "Lorenz", 21, "male", 800));
         employees.add(new Employee(5, "Ameer", 21, "male", 2000));

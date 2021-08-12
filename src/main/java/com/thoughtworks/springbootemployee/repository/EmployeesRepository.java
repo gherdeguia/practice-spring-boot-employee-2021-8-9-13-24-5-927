@@ -11,4 +11,6 @@ public interface EmployeesRepository extends JpaRepository<Employee, Integer> {
 
     public List<Employee> findAllByGender(String gender);
 
+
+
 }
