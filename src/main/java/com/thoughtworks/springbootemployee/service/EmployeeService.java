@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeesRepository;
 import com.thoughtworks.springbootemployee.repository.Old_EmployeesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -19,10 +20,6 @@ public class EmployeeService {
     @Autowired
     private EmployeesRepository employeesRepository;
 
-//    public EmployeeService(Old_EmployeesRepository olderEmployeeRepository) {
-//        this.olderEmployeeRepository = olderEmployeeRepository;
-//    }
-
     public List<Employee> getAllEmployeesService() {
         return employeesRepository.findAll();
     }
@@ -33,12 +30,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeesByPageService(Integer page, Integer pageSize) {
-        int skipCount = (page - 1) * pageSize;
-        return getAllEmployeesService()
-                .stream()
-                .skip(skipCount)
-                .limit(pageSize)
-                .collect(Collectors.toList());
+        return employeesRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
     }
 
     public List<Employee> getEmployeeByGenderService(String gender) {
