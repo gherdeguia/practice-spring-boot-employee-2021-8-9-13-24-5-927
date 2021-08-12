@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeesRepository;
+import com.thoughtworks.springbootemployee.repository.Old_EmployeesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,18 +14,21 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeService {
     @Autowired
+    private Old_EmployeesRepository olderEmployeeRepository;
+
+    @Autowired
     private EmployeesRepository employeesRepository;
 
-    public EmployeeService(EmployeesRepository employeesRepository) {
-        this.employeesRepository = employeesRepository;
-    }
+//    public EmployeeService(Old_EmployeesRepository olderEmployeeRepository) {
+//        this.olderEmployeeRepository = olderEmployeeRepository;
+//    }
 
     public List<Employee> getAllEmployeesService() {
-        return employeesRepository.getEmployees();
+        return employeesRepository.findAll();
     }
 
     public Employee findByEmployeeIDService(int employeeID) {
-        return employeesRepository.getEmployees()
+        return olderEmployeeRepository.getEmployees()
                 .stream()
                 .filter(employee -> employee.getId().equals(employeeID))
                 .findFirst()
@@ -33,7 +37,7 @@ public class EmployeeService {
 
     public List<Employee> getEmployeesByPageService(Integer page, Integer pageSize) {
         int skipCount = (page - 1) * pageSize;
-        return employeesRepository.getEmployees()
+        return olderEmployeeRepository.getEmployees()
                 .stream()
                 .skip(skipCount)
                 .limit(pageSize)
@@ -41,7 +45,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeByGenderService(String gender) {
-        return employeesRepository.getEmployees()
+        return olderEmployeeRepository.getEmployees()
                 .stream()
                 .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
@@ -55,11 +59,11 @@ public class EmployeeService {
                 employee.getGender(),
                 employee.getSalary()
         );
-        employeesRepository.getEmployees().add(newEmployee);
+        olderEmployeeRepository.getEmployees().add(newEmployee);
     }
 
     private int getLastEmployeeID() {
-        return Objects.requireNonNull(employeesRepository.getEmployees()
+        return Objects.requireNonNull(olderEmployeeRepository.getEmployees()
                 .stream()
                 .max(Comparator.comparingInt(Employee::getId))
                 .orElse(null))
@@ -67,7 +71,7 @@ public class EmployeeService {
     }
 
     public Employee updateEmployeeService(Integer employeeID, Employee employeeToBeUpdate) {
-        return employeesRepository.getEmployees().stream()
+        return olderEmployeeRepository.getEmployees().stream()
                 .filter(employee -> employee.getId().equals(employeeID))
                 .findFirst()
                 .map(employee -> updateEmployeeInfo(employee, employeeToBeUpdate))
@@ -91,6 +95,6 @@ public class EmployeeService {
     }
 
     public void deleteEmployeeService(Integer employeeID) {
-        employeesRepository.getEmployees().remove(findByEmployeeIDService(employeeID));
+        olderEmployeeRepository.getEmployees().remove(findByEmployeeIDService(employeeID));
     }
 }

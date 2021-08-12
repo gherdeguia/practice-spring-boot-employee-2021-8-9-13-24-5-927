@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeesRepository;
+import com.thoughtworks.springbootemployee.repository.Old_EmployeesRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,12 +14,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
     @InjectMocks
     private EmployeeService employeeService;
 
+    @Mock
+    private Old_EmployeesRepository old_employeesRepository;
     @Mock
     private EmployeesRepository employeesRepository;
 
@@ -29,11 +33,14 @@ class EmployeeServiceTest {
 
         employees.add(new Employee(1, "tom", 20, "female", 1000));
         employees.add(new Employee(2, "jerry", 21, "male", 900));
-        given(employeesRepository.getEmployees()).willReturn(employees);
+        given(employeesRepository.findAll()).willReturn(employees);
+
         //when
         List<Employee> actualEmployee = employeeService.getAllEmployeesService();
 
         //then
+//        assertNull(employees);
+//        assertNotNull(actualEmployee);
         assertIterableEquals(employees, actualEmployee);
 
     }
@@ -47,7 +54,7 @@ class EmployeeServiceTest {
         employees.add(new Employee(2, "jerry", 21, "male", 900));
         employees.add(new Employee(3, "hayley", 20, "female", 12345));
         employees.add(new Employee(4, "josh", 21, "male", 3215));
-        given(employeesRepository.getEmployees()).willReturn(employees);
+        given(old_employeesRepository.getEmployees()).willReturn(employees);
         //when
         Employee actualEmployee = employeeService.findByEmployeeIDService(3);
 
@@ -70,7 +77,7 @@ class EmployeeServiceTest {
         employees.add(new Employee(8, "GerarldB", 23, "male", 1100));
         employees.add(new Employee(9, "LorenzB", 21, "male", 800));
         employees.add(new Employee(10, "FalconB", 21, "male", 2000));
-        given(employeesRepository.getEmployees()).willReturn(employees);
+        given(old_employeesRepository.getEmployees()).willReturn(employees);
 
         //when
         List<Employee> actualEmployees = employeeService.getEmployeesByPageService(2,3);
@@ -91,7 +98,7 @@ class EmployeeServiceTest {
         employees.add(new Employee(4, "Lorenz", 21, "male", 800));
         employees.add(new Employee(5, "Falcon", 21, "male", 2000));
         employees.add(new Employee(6, "tomB", 20, "female", 1000));
-        given(employeesRepository.getEmployees()).willReturn(employees);
+        given(old_employeesRepository.getEmployees()).willReturn(employees);
         //when
         List<Employee> actualEmployees = employeeService.getEmployeeByGenderService("female");
 
@@ -108,7 +115,7 @@ class EmployeeServiceTest {
         employees.add(new Employee(4, "Lorenz", 21, "male", 800));
         employees.add(new Employee(5, "Falcon", 21, "male", 2000));
         employees.add(new Employee(6, "tomB", 20, "female", 1000));
-        given(employeesRepository.getEmployees()).willReturn(employees);
+        given(old_employeesRepository.getEmployees()).willReturn(employees);
         //when
         Employee employee = new Employee("Edward", 20, "male", 14567);
         employeeService.addNewEmployeeService(employee);
@@ -126,7 +133,7 @@ class EmployeeServiceTest {
         employees.add(new Employee(8, "Winry", 23, "female", 1100));
         employees.add(new Employee(9, "Edward", 23, "male", 1599));
         employees.add(new Employee(10, "Alfonse", 21, "male", 2000));
-        given(employeesRepository.getEmployees()).willReturn(employees);
+        given(old_employeesRepository.getEmployees()).willReturn(employees);
         //when
         Employee employeeToBeUpdated = new Employee(9, "Edward Elric", 20, "male", 99999);
         employeeService.updateEmployeeService(9,employeeToBeUpdated);
@@ -145,7 +152,7 @@ class EmployeeServiceTest {
         employees.add(new Employee(8, "Wrath", 55, "male", 1100));
         employees.add(new Employee(9, "Edward Elric", 23, "male", 1599));
         employees.add(new Employee(10, "Alfonse Elric", 21, "male", 2000));
-        given(employeesRepository.getEmployees()).willReturn(employees);
+        given(old_employeesRepository.getEmployees()).willReturn(employees);
         //when
         employeeService.deleteEmployeeService(8);
         //then

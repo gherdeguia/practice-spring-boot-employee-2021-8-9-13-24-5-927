@@ -3,7 +3,7 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import com.thoughtworks.springbootemployee.repository.EmployeesRepository;
+import com.thoughtworks.springbootemployee.repository.Old_EmployeesRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,7 +24,7 @@ public class CompanyServiceTest {
 
     @Mock
     private CompanyRepository companyRepository;
-    private EmployeesRepository employeesRepository;
+    private Old_EmployeesRepository employeesRepository;
 
     @Test
     public void should_return_all_companies_when_get_given_all_companies() {
