@@ -321,3 +321,55 @@ select company0_.id as id1_0_, company0_.name as name2_0_ from company company0_
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
+2021-08-12 16:14:06 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM EMPLOYEE 
+
+UPDATE EMPLOYEE[*]
+SET COMPANY_ID = 1"; SQL statement:
+SELECT * FROM EMPLOYEE 
+
+UPDATE EMPLOYEE
+SET COMPANY_ID = 1 [42000-200]
+2021-08-12 16:14:06 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "WHERE[*] ID = 1"; SQL statement:
+WHERE ID = 1 [42000-200]
+2021-08-12 16:14:13 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "WHERE[*] ID = 1"; SQL statement:
+WHERE ID = 1 [42000-200]
+2021-08-12 16:14:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "WHERE[*] NAME= 'Lorenz'"; SQL statement:
+WHERE name= 'Lorenz' [42000-200]
+2021-08-12 16:14:41 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM EMPLOYEE 
+
+UPDATE EMPLOYEE[*]
+SET COMPANY_ID = 1"; SQL statement:
+SELECT * FROM EMPLOYEE 
+
+UPDATE EMPLOYEE
+SET COMPANY_ID = 1 [42000-200]
+2021-08-12 16:14:41 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "WHERE[*] NAME= 'Lorenz'"; SQL statement:
+WHERE name= 'Lorenz' [42000-200]
+2021-08-12 16:15:12 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM EMPLOYEE 
+
+UPDATE EMPLOYEE[*]
+SET COMPANY_ID = 1
+WHERE NAME= 'Lorenz'"; SQL statement:
+SELECT * FROM EMPLOYEE 
+
+UPDATE EMPLOYEE
+SET COMPANY_ID = 1
+WHERE name= 'Lorenz' [42000-200]
+2021-08-12 16:15:28 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM EMPLOYEE 
+
+UPDATE EMPLOYEE[*]
+SET COMPANY_ID = 1
+WHERE NAME= 'GG'"; SQL statement:
+SELECT * FROM EMPLOYEE 
+
+UPDATE EMPLOYEE
+SET COMPANY_ID = 1
+WHERE name= 'GG' [42000-200]

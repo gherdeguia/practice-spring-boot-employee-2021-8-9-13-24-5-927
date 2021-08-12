@@ -30,11 +30,7 @@ public class CompanyService {
     }
 
     public List<Employee> getEmployeesByCompanyID(int companyID) {
-        return Objects.requireNonNull(getAllCompaniesService()
-                .stream()
-                .filter(company -> company.getId().equals(companyID))
-                .findFirst()
-                .orElse(null)).getEmployees();
+        return findCompanyByIDService(companyID).getEmployees();
     }
 
     public List<Company> getCompaniesByPageService(int pageNumber, int pageSize) {
