@@ -2,7 +2,6 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeesRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -73,11 +72,6 @@ class EmployeeServiceTest {
         employees.add(new Employee(10, "FalconB", 21, "male", 2000));
         given(employeesRepository.getEmployees()).willReturn(employees);
 
-
-        List<Employee> employeeList = new ArrayList<>();
-        employeeList.add(new Employee(4, "Lorenz", 21, "male", 800));
-        employeeList.add(new Employee(5, "Falcon", 21, "male", 2000));
-        employeeList.add(new Employee(6, "tomB", 20, "female", 1000));
         //when
         List<Employee> actualEmployees = employeeService.getEmployeesByPageService(2,3);
 

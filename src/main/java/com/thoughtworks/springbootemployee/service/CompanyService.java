@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class CompanyService {
     @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
 
     public CompanyService(CompanyRepository companyRepository) {
@@ -34,28 +34,23 @@ public class CompanyService {
     }
 
     public List<Employee> getEmployeesByCompanyID(int companyID) {
-        return Objects.requireNonNull(companyRepository.getAllCompanies()
+        return Objects.requireNonNull(getAllCompaniesService()
                 .stream()
                 .filter(company -> company.getId().equals(companyID))
                 .findFirst()
-                .orElse(null))
-                .getEmployees();
+                .orElse(null)).getEmployees();
     }
 
     public List<Company> getCompaniesByPageService(int pageNumber, int pageSize) {
         int skipCount = (pageNumber - 1) * pageSize;
-        return companyRepository.getAllCompanies()
-                .stream()
-                .skip(skipCount)
-                .limit(pageSize)
-                .collect(Collectors.toList());
+        return getAllCompaniesService().stream().skip(skipCount).limit(pageSize).collect(Collectors.toList());
     }
 
     public void addNewCompanyService(Company company) {
-        int lastCompanyID = companyRepository.getAllCompanies()
+        int lastCompanyID = Objects.requireNonNull(companyRepository.getAllCompanies()
                 .stream()
                 .max(Comparator.comparingInt(Company::getId))
-                .get()
+                .orElse(null))
                 .getId();
         Company newCompany = new Company( lastCompanyID +1,
                 company.getName(),
@@ -69,7 +64,7 @@ public class CompanyService {
                 .filter(company -> company.getId().equals(companyID) )
                 .findFirst()
                 .map(company -> updateCompanyInfo(company,companyToBeUpdated))
-                .get();
+                .orElse(null);
     }
 
     private Company updateCompanyInfo(Company company, Company companyToBeUpdated) {

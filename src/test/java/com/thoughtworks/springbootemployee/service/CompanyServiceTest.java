@@ -78,10 +78,11 @@ public class CompanyServiceTest {
 
         //then
 
-        assertEquals(companies.get(0),outputCompany);
-        assertEquals(companies.get(0).getId(),outputCompany.getId());
-        assertEquals(companies.get(0).getName(),outputCompany.getName());
+        assertEquals(companies.get(0), outputCompany);
+        assertEquals(companies.get(0).getId(), outputCompany.getId());
+        assertEquals(companies.get(0).getName(), outputCompany.getName());
     }
+
     @Test
     public void should_return_employees_when_get_given_company_id() {
         //given
@@ -106,12 +107,12 @@ public class CompanyServiceTest {
         List<Employee> outputCompanyEmployees = companyService.getEmployeesByCompanyID(3);
 
         //then
-        assertIterableEquals(employees_list2,outputCompanyEmployees);
-        assertEquals(employees_list2,outputCompanyEmployees);
+        assertIterableEquals(employees_list2, outputCompanyEmployees);
+        assertEquals(employees_list2, outputCompanyEmployees);
     }
 
     @Test
-    public void should_return_companies_per_page_when_get_give_companies_and_page_size_and_page_number(){
+    public void should_return_companies_per_page_when_get_give_companies_and_page_size_and_page_number() {
         //given
         List<Employee> employees_list1 = new ArrayList<>();
         List<Employee> employees_list2 = new ArrayList<>();
@@ -132,7 +133,7 @@ public class CompanyServiceTest {
         given(companyRepository.getAllCompanies()).willReturn(companies);
 
         //when
-        List<Company> outputCompaniesByPages = companyService.getCompaniesByPageService(1,5);
+        List<Company> outputCompaniesByPages = companyService.getCompaniesByPageService(1, 5);
 
         //then
         assertEquals(5, outputCompaniesByPages.size());
@@ -162,12 +163,12 @@ public class CompanyServiceTest {
         given(companyRepository.getAllCompanies()).willReturn(companies);
 
         //when
-        Company company = new Company("CERN",employees_list1);
+        Company company = new Company("CERN", employees_list1);
         companyService.addNewCompanyService(company);
 
 
         //then
-        assertEquals(companyService.getAllCompaniesService().size(),companies.size());
+        assertEquals(companyService.getAllCompaniesService().size(), companies.size());
         assertEquals(companyService.getAllCompaniesService().get(3).getId(), companies.get(3).getId());
 
     }

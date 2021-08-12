@@ -59,12 +59,11 @@ public class EmployeeService {
     }
 
     private int getLastEmployeeID() {
-        int lastEmployeeID = employeesRepository.getEmployees()
+        return Objects.requireNonNull(employeesRepository.getEmployees()
                 .stream()
                 .max(Comparator.comparingInt(Employee::getId))
-                .get()
+                .orElse(null))
                 .getId();
-        return lastEmployeeID;
     }
 
     public Employee updateEmployeeService(Integer employeeID, Employee employeeToBeUpdate) {
@@ -72,7 +71,7 @@ public class EmployeeService {
                 .filter(employee -> employee.getId().equals(employeeID))
                 .findFirst()
                 .map(employee -> updateEmployeeInfo(employee, employeeToBeUpdate))
-                .get();
+                .orElse(null);
     }
 
     private Employee updateEmployeeInfo(Employee employee, Employee employeeToBeUpdate) {
