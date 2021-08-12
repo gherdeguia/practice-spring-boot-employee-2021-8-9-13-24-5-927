@@ -119,4 +119,32 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[0].gender").value(gender))
         ;
     }
+
+    @Test
+    void should_return_pagination_when_get_employee_given_page_and_pageSize() throws Exception {
+        Employee employee1 = new Employee("GG",20,"male",2021);
+        Employee employee2 = new Employee("Edward",19,"male",1223);
+        Employee employee3 = new Employee("Winry",18,"female",9999);
+        Employee employee4 = new Employee("Greed",99,"male",9999);
+        Employee employee5 = new Employee("Sloth",99,"male",9999);
+        Employee employee6 = new Employee("Lust",99,"female",9999);
+        employeesRepository.save(employee1);
+        employeesRepository.save(employee2);
+        employeesRepository.save(employee3);
+        employeesRepository.save(employee4);
+        employeesRepository.save(employee5);
+        employeesRepository.save(employee6);
+        //when
+        String gender = employee3.getGender();
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
+                    .param("page", String.valueOf(2))
+                    .param("pageSize", String.valueOf(3))
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("Greed"))
+                .andExpect(jsonPath("$[1].name").value("Sloth"))
+        ;
+
+    }
 }
