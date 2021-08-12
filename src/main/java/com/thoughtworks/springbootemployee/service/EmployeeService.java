@@ -34,7 +34,7 @@ public class EmployeeService {
 
     public List<Employee> getEmployeesByPageService(Integer page, Integer pageSize) {
         int skipCount = (page - 1) * pageSize;
-        return olderEmployeeRepository.getEmployees()
+        return getAllEmployeesService()
                 .stream()
                 .skip(skipCount)
                 .limit(pageSize)

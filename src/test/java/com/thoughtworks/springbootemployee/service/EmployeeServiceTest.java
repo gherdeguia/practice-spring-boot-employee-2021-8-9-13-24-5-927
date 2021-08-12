@@ -74,7 +74,7 @@ class EmployeeServiceTest {
         employees.add(new Employee(8, "GerarldB", 23, "male", 1100));
         employees.add(new Employee(9, "LorenzB", 21, "male", 800));
         employees.add(new Employee(10, "FalconB", 21, "male", 2000));
-        given(old_employeesRepository.getEmployees()).willReturn(employees);
+        given(employeesRepository.findAll()).willReturn(employees);
 
         //when
         List<Employee> actualEmployees = employeeService.getEmployeesByPageService(2,3);
