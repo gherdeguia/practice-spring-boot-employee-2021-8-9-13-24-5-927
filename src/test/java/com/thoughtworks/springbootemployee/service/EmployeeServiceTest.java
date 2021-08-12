@@ -95,12 +95,12 @@ class EmployeeServiceTest {
         employees.add(new Employee(4, "Lorenz", 21, "male", 800));
         employees.add(new Employee(5, "Falcon", 21, "male", 2000));
         employees.add(new Employee(6, "tomB", 20, "female", 1000));
-        given(old_employeesRepository.getEmployees()).willReturn(employees);
+        given(employeesRepository.findAllByGender("female")).willReturn(employees);
         //when
         List<Employee> actualEmployees = employeeService.getEmployeeByGenderService("female");
 
         //then
-        assertEquals(employees.get(2).getGender(), actualEmployees.get(0).getGender());
+        assertEquals("female", actualEmployees.get(2).getGender());
 
     }
 

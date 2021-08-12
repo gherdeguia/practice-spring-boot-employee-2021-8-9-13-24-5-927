@@ -11,6 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,12 +31,14 @@ public class EmployeeIntegrationTest {
     void should_return_all_employee_when_get_given_employees() throws Exception {
         //given
         final Employee employee = new Employee(1,"GG",20,"male",2021);
+        final Employee employee1 = new Employee(2,"GGWP",22,"male",2221);
         employeesRepository.save(employee);
+        employeesRepository.save(employee1);
         //when
         //then
             mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$[0].name").value("GG"))
+                    .andExpect(jsonPath("$[1].name").value("GGWP"))
             ;
     }
 
@@ -72,12 +77,6 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[1].name").value("GGWP"));
-
-//                        .andExpect(jsonPath("$.name").value("GG"))
-//                .andExpect(jsonPath("$.age").value(123))
-//                .andExpect(jsonPath("$.gender").value("male"))
-//                .andExpect(jsonPath("$.salary").value(1234))
-//                .andExpect(jsonPath("$.companyId").value(1))
     }
 
     @Test
@@ -100,6 +99,24 @@ public class EmployeeIntegrationTest {
         )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("GGWP"))
+        ;
+    }
+
+    @Test
+    void should_return_employees_list_by_gender_when_get_employee_given_employees_and_gender() throws Exception {
+        //given
+        Employee employee1 = new Employee("GG",20,"male",2021);
+        Employee employee2 = new Employee("Edward",19,"male",1223);
+        Employee employee3 = new Employee("Winry",18,"female",1123);
+        employeesRepository.save(employee1);
+        employeesRepository.save(employee2);
+        employeesRepository.save(employee3);
+        //when
+        String gender = employee3.getGender();
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/?gender={gender}",gender))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].gender").value(gender))
         ;
     }
 }
