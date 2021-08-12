@@ -51,4 +51,28 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.name").value("GG"))
         ;
     }
+
+    @Test
+    void should_add_employee_when_post_given_employee_details() throws Exception {
+        final Employee employee = new Employee(1,"GG",20,"male",2021);
+        String employeeToAdd = "{\n" +
+                "        \"id\": 33,\n" +
+                "        \"name\": \"GG\",\n" +
+                "        \"age\": 123,\n" +
+                "        \"gender\": \"male\",\n" +
+                "        \"salary\": 1234,\n" +
+                "    }";
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/employees")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employeeToAdd)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value("GG"))
+                .andExpect(jsonPath("$.age").value(123))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(1234))
+                .andExpect(jsonPath("$.companyId").value(1))
+                ;
+    }
 }
