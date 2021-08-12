@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -34,5 +35,20 @@ public class EmployeeIntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$[0].name").value("GG"))
             ;
+    }
+
+    @Test
+    void should_return_employee_when_get_given_employee_id() throws Exception {
+        //given
+        final Employee employee = new Employee(1,"GG",20,"male",2021);
+        final Employee savedEmployee = employeesRepository.save(employee);
+        int id = savedEmployee.getId();
+        //when
+        //then
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}",id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("GG"))
+        ;
     }
 }
