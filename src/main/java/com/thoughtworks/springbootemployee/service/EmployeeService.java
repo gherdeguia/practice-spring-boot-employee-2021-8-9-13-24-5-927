@@ -28,11 +28,8 @@ public class EmployeeService {
     }
 
     public Employee findByEmployeeIDService(int employeeID) {
-        return olderEmployeeRepository.getEmployees()
-                .stream()
-                .filter(employee -> employee.getId().equals(employeeID))
-                .findFirst()
-                .orElse(null);
+
+        return employeesRepository.findById(employeeID).orElse(null);
     }
 
     public List<Employee> getEmployeesByPageService(Integer page, Integer pageSize) {
