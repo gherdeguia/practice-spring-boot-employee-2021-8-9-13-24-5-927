@@ -42,11 +42,8 @@ public class EmployeeService {
     }
 
     public Employee updateEmployeeService(Integer employeeID, Employee employeeToBeUpdate) {
-        return olderEmployeeRepository.getEmployees().stream()
-                .filter(employee -> employee.getId().equals(employeeID))
-                .findFirst()
-                .map(employee -> updateEmployeeInfo(employee, employeeToBeUpdate))
-                .orElse(null);
+        Employee employee = findByEmployeeIDService(employeeID);
+        return employeesRepository.save(updateEmployeeInfo(employee,employeeToBeUpdate));
     }
 
     private Employee updateEmployeeInfo(Employee employee, Employee employeeToBeUpdate) {
