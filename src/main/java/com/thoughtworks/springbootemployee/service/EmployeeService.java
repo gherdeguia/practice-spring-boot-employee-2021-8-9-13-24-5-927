@@ -25,8 +25,11 @@ public class EmployeeService {
     }
 
     public Employee findByEmployeeIDService(int employeeID) {
-
         return employeesRepository.findById(employeeID).orElse(null);
+    }
+
+    public Employee findByEmployeeNameService(String employeeName) {
+        return employeesRepository.findByName(employeeName);
     }
 
     public List<Employee> getEmployeesByPageService(Integer page, Integer pageSize) {
@@ -37,8 +40,8 @@ public class EmployeeService {
         return employeesRepository.findAllByGender(gender);
     }
 
-    public void addNewEmployeeService(Employee employee) {
-        employeesRepository.save(employee);
+    public Employee addNewEmployeeService(Employee employee) {
+        return employeesRepository.save(employee);
     }
 
     public Employee updateEmployeeService(Integer employeeID, Employee employeeToBeUpdate) {
@@ -63,6 +66,6 @@ public class EmployeeService {
     }
 
     public void deleteEmployeeService(Integer employeeID) {
-        olderEmployeeRepository.getEmployees().remove(findByEmployeeIDService(employeeID));
+        employeesRepository.findAll().remove(findByEmployeeIDService(employeeID));
     }
 }
