@@ -65,6 +65,6 @@ public class EmployeeService {
     }
 
     public void deleteEmployeeService(Integer employeeID) {
-        employeesRepository.findAll().remove(findByEmployeeIDService(employeeID));
+        employeesRepository.deleteById(findByEmployeeIDService(employeeID).getId());
     }
 }
