@@ -28,10 +28,6 @@ public class EmployeeService {
         return employeesRepository.findById(employeeID).orElse(null);
     }
 
-    public Employee findByEmployeeNameService(String employeeName) {
-        return employeesRepository.findByName(employeeName);
-    }
-
     public List<Employee> getEmployeesByPageService(Integer page, Integer pageSize) {
         return employeesRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
     }
@@ -61,6 +57,9 @@ public class EmployeeService {
         }
         if (!Objects.isNull(employeeToBeUpdate.getSalary())) {
             employee.setSalary(employeeToBeUpdate.getSalary());
+        }
+        if (!Objects.isNull(employeeToBeUpdate.getCompanyId())) {
+            employee.setCompanyId(employeeToBeUpdate.getCompanyId());
         }
         return employee;
     }

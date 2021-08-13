@@ -18,8 +18,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
@@ -35,25 +33,18 @@ class EmployeeServiceTest {
     @Test
     public void should_return_all_employees_when_getAllEmployees_given_all_employees() {
         //given
-        List<Employee> employees = new ArrayList<>();
-
-        employees.add(new Employee(1, "tom", 20, "female", 1000));
-        employees.add(new Employee(2, "jerry", 21, "male", 900));
+        List<Employee> employees = employeesDataFactory();
         given(employeesRepository.findAll()).willReturn(employees);
-
         //when
         List<Employee> actualEmployee = employeeService.getAllEmployeesService();
-
         //then
         assertIterableEquals(employees, actualEmployee);
-
     }
 
     @Test
     public void should_return_employee_when_find_employee_by_id_given_employee_id() {
         //given
         Employee employee = new Employee(1, "tom", 20, "female", 1000);
-
         //when
         given(employeesRepository.findById(anyInt())).willReturn(java.util.Optional.of(employee));
         Employee actualEmployee = employeeService.findByEmployeeIDService(33);
@@ -92,17 +83,13 @@ class EmployeeServiceTest {
     @Test
     public void should_return_employees_when_find_employee_by_gender_given_employee_gender() {
         //given
-        List<Employee> employees = new ArrayList<>();
-
-        employees.add(new Employee(4, "Lorenz", 21, "male", 800));
-        employees.add(new Employee(5, "Falcon", 21, "male", 2000));
-        employees.add(new Employee(6, "tomB", 20, "female", 1000));
+        List<Employee> employees = employeesDataFactory();
         given(employeesRepository.findAllByGender("female")).willReturn(employees);
         //when
         List<Employee> actualEmployees = employeeService.getEmployeeByGenderService("female");
 
         //then
-        assertEquals("female", actualEmployees.get(2).getGender());
+        assertEquals("female", actualEmployees.get(0).getGender());
 
     }
 
@@ -153,6 +140,19 @@ class EmployeeServiceTest {
         //then
         assertNull(employeeService.findByEmployeeIDService(8));
 
+    }
+
+    private List<Employee> employeesDataFactory() {
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee("Lan Fan", 24, "female", 99));
+        employees.add(new Employee("Eric", 22, "male", 99));
+        employees.add(new Employee("Spongebob", 24, "male", 99));
+        employees.add(new Employee("Patrick", 22, "male", 99));
+        employees.add(new Employee("Gary", 24, "male", 99));
+        employees.add(new Employee("Squidward", 22, "male", 99));
+        employees.add(new Employee( "Sandy", 22, "female", 99));
+        employees.add(new Employee( "Winry", 22, "female", 99));
+        return employees;
     }
 
 }
